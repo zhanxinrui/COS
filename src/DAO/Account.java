@@ -23,7 +23,9 @@ public class Account {
      * */
     public static ResultSet getAccount(Connection con, String id, String passwd,String type)throws Exception {
         String sql = "select *from ? where ?=? and passwd=?";
-        PreparedStatement pstmt = con.prepareStatement(sql);
+        // PreparedStatement pstmt = con.prepareStatement(sql);
+		// 改成可返回可更新数据库ResultSet的pstmt
+        PreparedStatement pstmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         if (type.equals("Customer")) {
             pstmt.setString(1, "customer");
             pstmt.setString(2, "id");

@@ -6,7 +6,9 @@ package model;
  *
  * @Time 2018-11-24 13:31:01
  */
+
 public class Menuman extends Employee {
+
     public Menuman(){}
 
     public Menuman(String id, String name, String password) {
@@ -17,4 +19,8 @@ public class Menuman extends Employee {
     public Menuman(String id, String name, String password, String email, String address) {
         super(id, name, password, email, address);
     }
+
+	public boolean insert(){
+		return true;
+	}
 }
