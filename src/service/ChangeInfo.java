@@ -1,7 +1,7 @@
 package service;
 
 import java.util.ArrayList;
-import DAO.UpdatableSQL;
+import util.UpdatableSQL;
 import model.Worker;
 
 public class ChangeInfo{

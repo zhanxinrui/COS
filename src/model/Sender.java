@@ -7,7 +7,8 @@ package model;
  * @Time 2018-11-24 13:31:01
  */
 
-import DAO.UpdatableSQL;
+import util.SQL;
+import util.UpdatableSQL;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -17,8 +18,26 @@ public class Sender {
     private String name;
     private String password;
 
+
 	private ArrayList<String> changed_field;
 	private ArrayList<Object> changed_value;
+    public ResultSet rs_order, rs_food, rs_sender, rs_salary; //hold the rs if need
+
+    public void initialResultSet(SQL sql){
+        rs_order = sql.preUpdatebleQuery("order", "u_id", id);
+        rs_food = sql.updatableQuery("select * from food");
+        rs_salary = sql.preUpdatebleQuery("salary", "id", id);
+    }
+    public void initialResultSetOrder(SQL sql){
+        rs_order = sql.preUpdatebleQuery("order", "u_id", id);
+    }
+    public void initialResultSetFood(SQL sql){
+        rs_food = sql.updatableQuery("select * from food");
+    }
+    public void initialResultSetSalary(SQL sql){
+        rs_salary = sql.preUpdatebleQuery("salary", "id", id);
+    }
+
 
     public Sender(){}
 
@@ -59,7 +78,10 @@ public class Sender {
 			return false;
 		}
 	}
-
+    public void SetRsWorker(ResultSet rs){
+        rs_sender = rs;
+    }
+    public ResultSet getRsSender(){return this.rs_sender;}
 	public void cleanChange(){
 		changed_field.clear();
 		changed_value.clear();

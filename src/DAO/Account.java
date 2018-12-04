@@ -1,19 +1,15 @@
-package DAO;
+package dao;
 
-/**DAO
+/**dao
  *@Description 此对象用于访问数据库。
  * DAO中包含了各种数据库的操作方法。通过它的方法,
  * 结合POjo对数据库进行相关的操作.只是数据库的操作方法，不可以涉及到业务逻辑
  * */
 
 
-import model.Menuman;
-import model.Sender;
-import model.Worker;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**账户操作*/
 public class Account {

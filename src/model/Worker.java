@@ -1,7 +1,7 @@
 package model;
 
 import java.sql.ResultSet;
-import DAO.SQL;
+import util.SQL;
 
 public  class Worker {
     private String id;

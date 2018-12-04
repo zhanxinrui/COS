@@ -1,11 +1,10 @@
 package test;
 
-import Service.SQL;
-import Service.UpdatableSQL;
+import util.SQL;
+import util.UpdatableSQL;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 public class TestInsert{
 	// ResultSet next有抛出SQLException异常的可能,但我打算处理
