@@ -1,4 +1,4 @@
-package Util;
+package util;
 import java.sql.*;
 
 public class SQL{
@@ -25,7 +25,11 @@ public class SQL{
 	 // Statement stmt;  因为Statement对ResultSet的影响太大了，所以使用不显示的写出stmt这个引用
 	 // Statement stmt = ResultSet.getStatement
 	
-	// 建立连接
+
+	/**
+	 * 	 建立连接
+	 * */
+
 	public boolean connect(){
 		try{
 			// 注册JDBC驱动
@@ -44,8 +48,10 @@ public class SQL{
 			return false;
 		}
 	}
-	
-	// 执行查询语句
+
+	/**
+	 * 	 执行查询语句
+	 * */
 	public ResultSet query(String sql) {
 		/* Note: A ResultSet object is automatically closed by the Statement object 
 		 * that generated it when that Statement object is closed, re-executed, or is 
@@ -65,6 +71,7 @@ public class SQL{
 	public ResultSet updatableQuery(String sql){
 		/**
 		 * 返回一个可以对数据库进行增删改的ResultSet对象
+		 * 通过createStatement,execteQuery创建
 		 */
 		ResultSet result = null;
 		try {
@@ -80,7 +87,10 @@ public class SQL{
 		}
 		return result;
 	}
-
+	/**
+	 * 	返回一个可以对数据库进行增删改的ResultSet对象
+	 * 	通过prepareStatement,execteQuery 创建
+	 * */
 	public ResultSet preUpdatebleQuery(String table, String map, String map1){
 		String sql = "select *from ? where ?=?";
 		PreparedStatement pstmt = null;
@@ -97,7 +107,10 @@ public class SQL{
 		}
 		return rs;
 	}
-
+	/**
+	 * 	关闭statement
+	 *
+	 */
 	public void closeStatement(ResultSet result){
 		try{
 			// stmt.close();
@@ -107,6 +120,9 @@ public class SQL{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 *关闭连接
+	 * */
 	public void close(){
 		try{
 			conn.close();

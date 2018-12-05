@@ -1,4 +1,4 @@
-package Util;
+package util;
 
 
 import java.sql.ResultSet;
@@ -29,7 +29,7 @@ public class UpdatableSQL extends SQL {
 			// String
 			if(column_value[i] instanceof String)
 				rs.updateString(index, (String)column_value[i]);
-			// int
+				// int
 			else if(column_value[i] instanceof Integer) {
 				System.out.print("该整数位置与值");
 				System.out.println(i);
@@ -38,19 +38,19 @@ public class UpdatableSQL extends SQL {
 			// double
 			else if(column_value[i] instanceof Double)
 				rs.updateDouble(index, (double)column_value[i]);
-			// boolean
+				// boolean
 			else if(column_value[i] instanceof Boolean)
 				rs.updateBoolean(index, (boolean)column_value[i]);
-			// java.sql.Date
+				// java.sql.Date
 			else if(column_value[i] instanceof java.sql.Date)
 				rs.updateDate(index, (java.sql.Date)column_value[i]);
-			// java.sql.Blob
+				// java.sql.Blob
 			else if(column_value[i] instanceof java.sql.Blob)
 				rs.updateBlob(index, (java.sql.Blob)column_value[i]);
-			// java.sql.Time
+				// java.sql.Time
 			else if(column_value[i] instanceof java.sql.Time)
 				rs.updateTime(index, (java.sql.Time)column_value[i]);
-			// java.io.InputStream
+				// java.io.InputStream
 			else if(column_value[i] instanceof java.io.InputStream)
 				rs.updateBinaryStream(index, (java.io.InputStream)column_value[i]);
 
@@ -70,25 +70,25 @@ public class UpdatableSQL extends SQL {
 			// String
 			if(column_value[i] instanceof String)
 				rs.updateString(column_map[i], (String)column_value[i]);
-			// String
+				// String
 			else if(column_value[i] instanceof Integer)
 				rs.updateInt(column_map[i], (int)column_value[i]);
-			// double
+				// double
 			else if(column_value[i] instanceof Double)
 				rs.updateDouble(column_map[i], (double)column_value[i]);
-			// boolean
+				// boolean
 			else if(column_value[i] instanceof Boolean)
 				rs.updateBoolean(column_map[i], (boolean)column_value[i]);
-			// java.sql.Date
+				// java.sql.Date
 			else if(column_value[i] instanceof java.sql.Date)
 				rs.updateDate(column_map[i], (java.sql.Date)column_value[i]);
-			// java.sql.Blob
+				// java.sql.Blob
 			else if(column_value[i] instanceof java.sql.Blob)
 				rs.updateBlob(column_map[i], (java.sql.Blob)column_value[i]);
-			// java.sql.Time
+				// java.sql.Time
 			else if(column_value[i] instanceof java.sql.Time)
 				rs.updateTime(column_map[i], (java.sql.Time)column_value[i]);
-			// java.io.InputStream
+				// java.io.InputStream
 			else if(column_value[i] instanceof java.io.InputStream)
 				rs.updateBinaryStream(column_map[i], (java.io.InputStream)column_value[i]);
 
@@ -112,7 +112,7 @@ public class UpdatableSQL extends SQL {
 		}
 		try{
 			updateRowOrigin(rs, column_index, column_value);
-			// 插入数据时主键冲突可能会抛出SQLIntegrityConstraintViolationException异常 
+			// 插入数据时主键冲突可能会抛出SQLIntegrityConstraintViolationException异常
 			rs.insertRow();
 			return true;
 		}catch(SQLException e){
@@ -147,7 +147,7 @@ public class UpdatableSQL extends SQL {
 		}
 		try{
 			updateRowOrigin(rs, column_map, column_value);
-			// 插入数据时主键冲突可能会抛出SQLIntegrityConstraintViolationException异常 
+			// 插入数据时主键冲突可能会抛出SQLIntegrityConstraintViolationException异常
 			rs.insertRow();
 			return true;
 		}catch(SQLException e){
@@ -168,7 +168,7 @@ public class UpdatableSQL extends SQL {
 		}
 	}
 
-	
+
 	// 调用-----------------insertRow私有方法---------------------
 	// 接受外部column_value,使用类成员变量rs
 	public boolean insert(Object[] column_value){
@@ -218,9 +218,10 @@ public class UpdatableSQL extends SQL {
 	}
 
 	// -----------------调用insert公有方法---------------------
-	
-	/* 接受外部column_value,
-	 * 使用类成员变量table_name, 
+
+	/**
+	 * 接受外部column_value,
+	 * 使用类成员变量table_name,
 	 * 使用方法局部变量rs
 	 */
 	public boolean insertToTable(Object[] column_value){
@@ -234,8 +235,9 @@ public class UpdatableSQL extends SQL {
 		super.closeStatement(_rs);
 		return false;
 	}
-	
-	/* 接受外部column_value, 外部table_name
+
+	/**
+	 * 接受外部column_value, 外部table_name
 	 * 使用方法局部变量rs
 	 */
 	public boolean insertToTable(Object[] column_value, String _table_name){
@@ -248,8 +250,9 @@ public class UpdatableSQL extends SQL {
 		return false;
 	}
 
-	/* 接受外部column_value, 外部column_index
-	 * 使用类成员变量table_name, 
+	/* *
+	 *接受外部column_value, 外部column_index
+	 * 使用类成员变量table_name,
 	 * 使用方法局部变量rs
 	 */
 	public boolean insertToTable(int[] column_index, Object[] column_value){
@@ -277,7 +280,7 @@ public class UpdatableSQL extends SQL {
 
 
 	/* 接受外部column_value, 外部column_map
-	 * 使用类成员变量table_name, 
+	 * 使用类成员变量table_name,
 	 * 使用方法局部变量rs
 	 */
 	public boolean insertToTable(String[] column_map, Object[] column_value){
@@ -308,7 +311,7 @@ public class UpdatableSQL extends SQL {
 	private static boolean updateRow(ResultSet rs, int[] column_index, Object[] column_value){
 		try{
 			updateRowOrigin(rs, column_index, column_value);
-			// 插入数据时主键冲突可能会抛出SQLIntegrityConstraintViolationException异常 
+			// 插入数据时主键冲突可能会抛出SQLIntegrityConstraintViolationException异常
 			rs.updateRow();
 			return true;
 		}catch(SQLException e){
@@ -331,7 +334,7 @@ public class UpdatableSQL extends SQL {
 	private static boolean updateRow(ResultSet rs, String[] column_map, Object[] column_value){
 		try{
 			updateRowOrigin(rs, column_map, column_value);
-			// 插入数据时主键冲突可能会抛出SQLIntegrityConstraintViolationException异常 
+			// 插入数据时主键冲突可能会抛出SQLIntegrityConstraintViolationException异常
 			rs.updateRow();
 			return true;
 		}catch(SQLException e){
@@ -432,9 +435,9 @@ public class UpdatableSQL extends SQL {
 	}
 
 	// -----------------调用update公有方法---------------------
-	
+
 	/* 接受外部column_value,
-	 * 使用类成员变量table_name, 
+	 * 使用类成员变量table_name,
 	 * 使用方法局部变量rs
 	 */
 	public boolean updateToTable(Object[] column_value, String primary_key_name, String primary_key){
@@ -457,7 +460,7 @@ public class UpdatableSQL extends SQL {
 		super.closeStatement(_rs);
 		return false;
 	}
-	
+
 	/* 接受外部column_value, 外部table_name
 	 * 使用方法局部变量rs
 	 */
@@ -475,13 +478,13 @@ public class UpdatableSQL extends SQL {
 		if(UpdatableSQL.update(_rs, column_value)){
 			super.closeStatement(_rs);
 			return true;
-			}
+		}
 		super.closeStatement(_rs);
 		return false;
 	}
 
 	/* 接受外部column_value, 外部column_index
-	 * 使用类成员变量table_name, 
+	 * 使用类成员变量table_name,
 	 * 使用方法局部变量rs
 	 */
 	public boolean updateToTable(int[] column_index, Object[] column_value, String primary_key_name, String primary_key){
@@ -527,7 +530,7 @@ public class UpdatableSQL extends SQL {
 
 
 	/* 接受外部column_value, 外部column_map
-	 * 使用类成员变量table_name, 
+	 * 使用类成员变量table_name,
 	 * 使用方法局部变量rs
 	 */
 	public boolean updateToTable(String[] column_map, Object[] column_value, String primary_key_name, String primary_key){

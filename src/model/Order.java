@@ -38,11 +38,10 @@ public class Order {
      * @param status 订单状态
      * @param address 配送地址
      * @param money 订单总金额
-     * @param orderList 订单消费物品列表
      */
-
+    public Order(){}
     public Order(String orderId, String customerId, String SenderId, boolean havePaid, Date sendTime, Date arriveTime,
-                 Date requestTime, String tag, String paidWay, int status, String address, double money, String orderList) {
+                 Date requestTime, String tag, String paidWay, int status, String address, double money, String orderList ) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.senderId = senderId;

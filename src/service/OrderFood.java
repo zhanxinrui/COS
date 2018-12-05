@@ -27,7 +27,7 @@ public class OrderFood{
 
 	// 所有worker都能点餐
 	// 无tag,特殊要求
-	public boolean orderFood(String food_id, int paid_way){
+	public boolean OrderFood(String food_id, int paid_way){
 		int hava_paid = NO_PAID, status = INIT_STATUS;
 		if(paid_way == PAY_SALARY){
 			this.payFromSalay(this.getFoodPrice(food_id));
@@ -54,7 +54,7 @@ public class OrderFood{
 		return true;
 	}
 	// 有tag,特殊要求
-	public boolean orderFood(String food_id, int paid_way, String  ){
+	public boolean orderFood(String food_id, int paid_way, String  tag){
 		int hava_paid = NO_PAID, status = INIT_STATUS;
 		if(paid_way == PAY_SALARY){
 			this.payFromSalay(this.getFoodPrice(food_id));

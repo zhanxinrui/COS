@@ -1,7 +1,7 @@
 package test;
 
-import Util.SQL;
-import Util.UpdatableSQL;
+import util.SQL;
+import util.UpdatableSQL;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +12,7 @@ public class TestInsert{
 		SQL sql = new SQL();
 		if(!sql.connect())
 			return;
-		
+
 		ResultSet rs = sql.updatableQuery("select * from test");
 
 /*		// 插入
@@ -27,7 +27,7 @@ public class TestInsert{
 		// 更新数据库
 		try{
 			/* SQLException - if a database access error occurs; the result set concurrency is CONCUR_READ_ONLY,
-			 * this method is called on a closed result set, if this method is called when the cursor 
+			 * this method is called on a closed result set, if this method is called when the cursor
 			 * is not on the insert row, or if not all of non-nullable columns in the insert row have been given a non-null value
 			 * /
 			rs.insertRow();
@@ -37,7 +37,7 @@ public class TestInsert{
 		}
 		// 返回原位置
 		rs.moveToCurrentRow();
-		
+
 */
 		Object[] column_value = new Object[2];
 		column_value[0] = 1925;

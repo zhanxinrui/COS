@@ -17,7 +17,7 @@ public class Food {
     private boolean special;
     private Blob pic;
 
-
+    public Food(){}
     public Food(String id, String name, double price, int remain) {
         this.id = id;
         this.name = name;
