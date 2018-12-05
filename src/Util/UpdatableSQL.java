@@ -1,4 +1,4 @@
-package util;
+package Util;
 
 
 import java.sql.ResultSet;
@@ -30,8 +30,11 @@ public class UpdatableSQL extends SQL {
 			if(column_value[i] instanceof String)
 				rs.updateString(index, (String)column_value[i]);
 			// int
-			else if(column_value[i] instanceof Integer)
-				rs.updateInt(index, (int)column_value[i]);
+			else if(column_value[i] instanceof Integer) {
+				System.out.print("该整数位置与值");
+				System.out.println(i);
+				System.out.println(column_index[i]);
+				rs.updateInt(index, (int)column_value[i]);}
 			// double
 			else if(column_value[i] instanceof Double)
 				rs.updateDouble(index, (double)column_value[i]);
@@ -103,6 +106,7 @@ public class UpdatableSQL extends SQL {
 		try{
 			rs.moveToInsertRow();
 		}catch(SQLException e){
+			e.printStackTrace();
 			System.out.println("moveToInsertRow failed\n");
 			return false;
 		}
@@ -112,7 +116,7 @@ public class UpdatableSQL extends SQL {
 			rs.insertRow();
 			return true;
 		}catch(SQLException e){
-			System.out.println("out of Range");
+			e.printStackTrace();
 			return false;
 		}catch(Exception e1){
 			e1.printStackTrace();
@@ -121,6 +125,7 @@ public class UpdatableSQL extends SQL {
 			try{
 				rs.moveToCurrentRow();
 			}catch(SQLException e){
+				e.printStackTrace();
 				System.out.println("moveToCurrentRow failed\n");
 				return false;
 			}
@@ -136,6 +141,7 @@ public class UpdatableSQL extends SQL {
 		try{
 			rs.moveToInsertRow();
 		}catch(SQLException e){
+			e.printStackTrace();
 			System.out.println("moveToInsertRow failed\n");
 			return false;
 		}
@@ -145,6 +151,7 @@ public class UpdatableSQL extends SQL {
 			rs.insertRow();
 			return true;
 		}catch(SQLException e){
+			e.printStackTrace();
 			System.out.println("out of Range");
 			return false;
 		}catch(Exception e1){
@@ -154,6 +161,7 @@ public class UpdatableSQL extends SQL {
 			try{
 				rs.moveToCurrentRow();
 			}catch(SQLException e){
+				e.printStackTrace();
 				System.out.println("moveToCurrentRow failed\n");
 				return false;
 			}
@@ -174,6 +182,8 @@ public class UpdatableSQL extends SQL {
 	// 接受外部column_value, 外部rs.
 	public static boolean insert(ResultSet _rs, Object[] column_value){
 		int[] local_column_index = new int[column_value.length];
+		System.out.println("the rows of column_value:");
+		System.out.println(column_value.length);
 		for(int i = 0; i < column_value.length; i++)
 			local_column_index[i] = i + 1;
 		if(UpdatableSQL.insertRow(_rs, local_column_index, column_value))
@@ -302,6 +312,7 @@ public class UpdatableSQL extends SQL {
 			rs.updateRow();
 			return true;
 		}catch(SQLException e){
+			e.printStackTrace();
 			System.out.println("out of Range");
 			return false;
 		}catch(Exception e1){
@@ -311,6 +322,7 @@ public class UpdatableSQL extends SQL {
 			try{
 				rs.moveToCurrentRow();
 			}catch(SQLException e){
+				e.printStackTrace();
 				System.out.println("moveToCurrentRow failed\n");
 				return false;
 			}
@@ -323,7 +335,7 @@ public class UpdatableSQL extends SQL {
 			rs.updateRow();
 			return true;
 		}catch(SQLException e){
-			System.out.println("out of Range");
+			e.printStackTrace();
 			return false;
 		}catch(Exception e1){
 			e1.printStackTrace();
@@ -332,6 +344,7 @@ public class UpdatableSQL extends SQL {
 			try{
 				rs.moveToCurrentRow();
 			}catch(SQLException e){
+				e.printStackTrace();
 				System.out.println("moveToCurrentRow failed\n");
 				return false;
 			}
@@ -411,6 +424,8 @@ public class UpdatableSQL extends SQL {
 	public static boolean update(ResultSet _rs, String map, Object value){
 		String[] column_map = new String[]{map};
 		Object[] column_value = new Object[]{value};
+		System.out.print(map + "对应的新值：");
+		System.out.println(value);
 		if(UpdatableSQL.updateRow(_rs, column_map, column_value))
 			return true;
 		return false;
@@ -430,7 +445,9 @@ public class UpdatableSQL extends SQL {
 				super.closeStatement(_rs);
 				return false;
 			}
-		}catch(SQLException e){}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 		// change access to static
 		// if(this.update(local_rs, column_value))
 		if(UpdatableSQL.update(_rs, column_value)){
@@ -452,7 +469,9 @@ public class UpdatableSQL extends SQL {
 				super.closeStatement(_rs);
 				return false;
 			}
-		}catch(SQLException e){}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 		if(UpdatableSQL.update(_rs, column_value)){
 			super.closeStatement(_rs);
 			return true;
@@ -473,7 +492,9 @@ public class UpdatableSQL extends SQL {
 				super.closeStatement(_rs);
 				return false;
 			}
-		}catch(SQLException e){}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 		if(UpdatableSQL.update(_rs, column_index, column_value)){
 			super.closeStatement(_rs);
 			return true;
@@ -493,7 +514,9 @@ public class UpdatableSQL extends SQL {
 				super.closeStatement(_rs);
 				return false;
 			}
-		}catch(SQLException e){}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 		if(UpdatableSQL.update(_rs, column_index, column_value)){
 			super.closeStatement(_rs);
 			return true;
@@ -515,7 +538,9 @@ public class UpdatableSQL extends SQL {
 				super.closeStatement(_rs);
 				return false;
 			}
-		}catch(SQLException e){}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 		if(UpdatableSQL.update(_rs, column_map, column_value)){
 			super.closeStatement(_rs);
 			return true;
@@ -535,7 +560,9 @@ public class UpdatableSQL extends SQL {
 				super.closeStatement(_rs);
 				return false;
 			}
-		}catch(SQLException e){}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 		if(UpdatableSQL.update(_rs, column_map, column_value)){
 			super.closeStatement(_rs);
 			return true;

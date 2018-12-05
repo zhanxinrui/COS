@@ -1,7 +1,7 @@
 package test;
 
-import util.SQL;
-import util.UpdatableSQL;
+import Util.SQL;
+import Util.UpdatableSQL;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,9 +40,12 @@ public class TestInsert{
 		
 */
 		Object[] column_value = new Object[2];
-		column_value[0] = 1600;
-		column_value[1] = "nihaoa";
-		UpdatableSQL upsql = new UpdatableSQL(rs, "test");
+		column_value[0] = 1925;
+		column_value[1] = "hhnwoei";
+		UpdatableSQL upsql = new UpdatableSQL(rs);
+		if(column_value[1] instanceof Integer)
+			System.out.println("judge error!");
+		System.out.println("judge right!");
 		upsql.insert(column_value);
 		rs.close();
 		rs = sql.query("select id, str from test");

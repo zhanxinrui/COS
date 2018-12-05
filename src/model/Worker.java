@@ -1,7 +1,7 @@
 package model;
 
 import java.sql.ResultSet;
-import util.SQL;
+import Util.SQL;
 
 public  class Worker {
     private String id;
@@ -9,6 +9,9 @@ public  class Worker {
     private String password;
     private String email;
     private String address;
+
+	// 默认值为0,即非注册工资支付员工
+	private int salary_pay = 0;
 
 
 	public ResultSet rs_order, rs_food, rs_worker, rs_salary;
@@ -35,6 +38,7 @@ public  class Worker {
         this.name = name;
         this.password = passwd;
     }
+	// "salary_pay"
     public Worker(String id, String name, String passwd, String email, String address){
         this.id = id;
         this.name = name;
@@ -72,6 +76,11 @@ public  class Worker {
     public String getAddress(){return address;}
     public void setAddress(String addr){
 		this.address = addr;
+	}
+	// salary_pay
+	public int getSalary_pay(){ return salary_pay; }
+	public void setSalary_pay(int pay_way){
+		salary_pay = pay_way;
 	}
 }
 

@@ -1,4 +1,4 @@
-package dao;
+package DAO;
 
 /**dao
  *@Description 此对象用于访问数据库。
@@ -18,34 +18,36 @@ public class Account {
      *可修改
      * */
     public static ResultSet getAccount(Connection con, String id, String passwd,String type)throws Exception {
-        String sql = "select *from ? where ?=? and passwd=?";
+        String sql = "select * from ? where id  = ? and passwd = ?";
         // PreparedStatement pstmt = con.prepareStatement(sql);
 		// 改成可返回可更新数据库ResultSet的pstmt
-        PreparedStatement pstmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		PreparedStatement pstmt = null;
         if (type.equals("Customer")) {
-            pstmt.setString(1, "customer");
-            pstmt.setString(2, "id");
-            pstmt.setString(3,id);
-            pstmt.setString(4,passwd);
+			sql = sql.replaceFirst("\\?", "customer");
+			pstmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			System.out.println(sql);
+            pstmt.setString(1,id);
+            pstmt.setString(2,passwd);
         }
         else if (type.equals("Employee")) {
-            pstmt.setString(1, "employee");
-            pstmt.setString(2, "id");
-            pstmt.setString(3,id);
-            pstmt.setString(4,passwd);
+			sql = sql.replaceFirst("\\?", "employee");
+			pstmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            pstmt.setString(1,id);
+            pstmt.setString(2,passwd);
         }
         else if (type.equals("Menuman")) {
-            pstmt.setString(1, "menuman");
-            pstmt.setString(2, "id");
-            pstmt.setString(3,id);
-            pstmt.setString(4,passwd);
+			sql = sql.replaceFirst("\\?", "menuman");
+			pstmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            pstmt.setString(1,id);
+            pstmt.setString(2,passwd);
         }
         else if (type.equals("Sender")) {
-            pstmt.setString(1, "sender");
-            pstmt.setString(2, "id");
-            pstmt.setString(3,id);
-            pstmt.setString(4,passwd);
+			sql = sql.replaceFirst("\\?", "sender");
+			pstmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            pstmt.setString(1,id);
+            pstmt.setString(2,passwd);
         }
+        System.out.printf("sql语句：%s\n", pstmt.toString());
         ResultSet rs=pstmt.executeQuery();
         return rs;
 

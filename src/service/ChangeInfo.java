@@ -1,7 +1,7 @@
 package service;
 
 import java.util.ArrayList;
-import util.UpdatableSQL;
+import Util.UpdatableSQL;
 import model.Worker;
 
 public class ChangeInfo{
@@ -12,6 +12,8 @@ public class ChangeInfo{
 	private ArrayList<String> changed_field;
 	// 属性的新值
 	private ArrayList<Object> changed_value;
+
+	private static int SALARY_PAY = 0;
 
 	ChangeInfo(Worker _user){ user = _user; }
 
@@ -46,6 +48,11 @@ public class ChangeInfo{
 			cleanChange();
 			return false;
 		}
+	}
+
+	public void signupSalaryPay(){
+		changed_field.add("salary_pay");	
+		changed_value.add(SALARY_PAY);
 	}
 
 	public void cleanChange(){

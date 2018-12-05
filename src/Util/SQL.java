@@ -1,4 +1,4 @@
-package util;
+package Util;
 import java.sql.*;
 
 public class SQL{
@@ -12,7 +12,7 @@ public class SQL{
     private static final String PASS = "134679";
 
 	// 数据库的连接与查询
-	static Connection conn;
+	public static Connection conn;
 
 	/* The object used for executing a static SQL statement and returning the results it produces.
 	 * By default, only one ResultSet object per Statement object can be open at the same time. 
