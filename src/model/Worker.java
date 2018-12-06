@@ -14,23 +14,28 @@ public  class Worker {
     private int salary_pay = 0;
 
 
-    public ResultSet rs_order, rs_food, rs_worker, rs_salary;
+    public ResultSet rs_order, rs_food, rs_worker;
 
 
     public void initialResultSet(SQL sql){
-        rs_order = sql.preUpdatebleQuery("order", "u_id", id);
-        rs_food = sql.updatableQuery("select * from food");
-        rs_salary = sql.preUpdatebleQuery("salary", "id", id);
+		initialResultSetOrder(sql);
+		initialResultSetFood(sql);
     }
     public void initialResultSetOrder(SQL sql){
-        rs_order = sql.preUpdatebleQuery("order", "u_id", id);
+		// 我被坑死了为什么不加COS sql语句报错!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		String sql_statement = "select * from COS.order where u_id = '" + id + "'";
+		// csdn坑我,改成这样并没有用，还是不能更新没有主键的表
+        // rs_order = sql.scroll_InsensitiveUpdatableQuery(sql_statement);
+        rs_order = sql.updatableQuery(sql_statement);
     }
     public void initialResultSetFood(SQL sql){
         rs_food = sql.updatableQuery("select * from food");
     }
+	/*
     public void initialResultSetSalary(SQL sql){
         rs_salary = sql.preUpdatebleQuery("salary", "id", id);
     }
+	*/ // 没用了 关于工资的表
 
     public Worker(){}
     public Worker(String id, String name, String passwd){

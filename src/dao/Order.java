@@ -128,6 +128,9 @@ public class Order {
             foodIns.setName(rs.getString("name") );
             foodIns.setPrice(rs.getDouble("price"));
             foodIns.setSpecial(rs.getString("feature"));
+			// zheliangtiaoweishenmemeijiashang rangwohaozhao
+            foodIns.setPic(rs.getString("pic"));
+            foodIns.SetRemain(rs.getInt("remain"));
             return foodIns;
         }catch(Exception e){
 //            e.printStackTrace();

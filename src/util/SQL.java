@@ -87,6 +87,21 @@ public class SQL{
 		}
 		return result;
 	}
+
+	/**
+	 * 返回一个可以对数据库进行增删改的ResultSet对象
+	 * 通过createStatement,execteQuery创建
+	 */
+	public ResultSet scroll_InsensitiveUpdatableQuery(String sql){
+		ResultSet result = null;
+		try {
+			result = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery(sql);
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	/**
 	 * 	返回一个可以对数据库进行增删改的ResultSet对象
 	 * 	通过prepareStatement,execteQuery 创建

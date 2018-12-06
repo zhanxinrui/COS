@@ -51,7 +51,7 @@ public class ManageMenu{
 		try{
 			rs.beforeFirst();
 			while(rs.next()){
-				dao.Order.getFoodFromRs(rs);
+				menu.add(dao.Order.getFoodFromRs(rs));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();

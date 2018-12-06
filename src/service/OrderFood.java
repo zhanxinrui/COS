@@ -80,12 +80,12 @@ public class OrderFood{
 
 	public static boolean addOrderToDB(ResultSet rs, Order o){
 		String[] column_map = new String[]{
-			"o_id", "u_id", "hava_paid", "arr_t", "tag", "paid_way", "status", "addr", "money", "req_t"
+			"o_id", "u_id", "have_paid", "arr_t", "tag", "paid_way", "status", "addr", "money", "req_t"
 		};
 
 		Object[] column_value = new Object[]{
-			o.getOrderId(), o.getCustomerId(), o.getHavePaid(), o.getTag(), o.getPaidWay(),
-			o.getStatus(), o.getAddress(), o.getMoney(), o.getRequestTime()
+			o.getOrderId(), o.getCustomerId(), o.getHavePaid(), o.getArriveTime(), o.getTag(),
+			o.getPaidWay(), o.getStatus(), o.getAddress(), o.getMoney(), o.getRequestTime()
 		};
 		if(UpdatableSQL.insert(rs, column_map, column_value))
 			return true;
