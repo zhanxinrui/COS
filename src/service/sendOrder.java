@@ -178,7 +178,7 @@ public class sendOrder {
      **/
     public static boolean saveOrder(Sender sdr) throws IOException, SQLException, ParseException {
         UpdatableSQL up_sql_order = new UpdatableSQL(sdr.rs_order);
-        ArrayList<Order> orderList = getReceiveOrder(sdr);
+        ArrayList<Order> orderList = getReceiveOrderBySender(sdr);
         String pathname = "订餐说明.txt";//default filename
         try(FileOutputStream fileOutputStream = new FileOutputStream(pathname,true)){//Order List content out to a file
             for(Order o: orderList){
@@ -203,7 +203,7 @@ public class sendOrder {
      * 实例方法
      **/
     public  boolean saveOrder() throws IOException, SQLException, ParseException {
-        ArrayList<Order> orderList = getReceiveOrder(sdr);
+        ArrayList<Order> orderList = getReceiveOrderBySender(sdr);
         String pathname = "订餐说明.txt";//default filename
         try(FileOutputStream fileOutputStream = new FileOutputStream(pathname,true)){//Order List content out to a file
             for(Order o: orderList){
@@ -230,7 +230,7 @@ public class sendOrder {
      * @param time 送达的时间
      * */
     public boolean  recordReceivedOrder(ArrayList<Order>oList, Date time) throws SQLException {
-        s.rs_order.beforeFirst();//recover cursor to the default position
+        sdr.rs_order.beforeFirst();//recover cursor to the default position
         ArrayList<Order> orderList = new ArrayList<Order>();
         try{
             for(Order o:oList) {
@@ -265,9 +265,9 @@ public class sendOrder {
      * @param time 送达的时间
      * */
 
-    public static boolean  recordReceivedOrder(Sender s, ArrayList<Order>oList, Date time) throws SQLException {
+    public static boolean  recordReceivedOrder(Sender sdr, ArrayList<Order>oList, Date time) throws SQLException {
         UpdatableSQL up_sql_order = new UpdatableSQL(sdr.rs_order);
-        s.rs_order.beforeFirst();//recover cursor to the default position
+        sdr.rs_order.beforeFirst();//recover cursor to the default position
         ArrayList<Order> orderList = new ArrayList<Order>();
         try{
             for(Order o:oList) {
