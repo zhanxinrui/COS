@@ -59,15 +59,12 @@ public class ManageMenu{
 			return true;
 		return false;
 	}
-	public static ArrayList<Food> getMenu(ResultSet rs){
+	public static ArrayList<Food> getMenu(ResultSet rs) throws Exception{
 		ArrayList<Food> menu = new ArrayList<Food>();
 		try{
 			rs.beforeFirst();
 			while(rs.next()){
-				menu.add(new Food(
-							rs.getString("id"), rs.getString("name"), rs.getFloat("price"),
-							rs.getInt("remain"),  rs.getString("feature"), rs.getBlob("pic")
-							));
+				dao.Order.getFoodFromRs(rs);
 			}
 		}catch(SQLException e){
 			e.printStackTrace();

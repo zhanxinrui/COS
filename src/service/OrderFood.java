@@ -2,6 +2,7 @@ package service;
 
 import java.util.Date;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -49,50 +50,35 @@ public class OrderFood{
 		order.setRequestTime(time);
 		return order;
 	}
-    public static ArrayList<Order> getOrderList(Worker w){//顾客 customer: 查看订单
+    public static ArrayList<Order> getOrderList(Worker w) throws Exception{//顾客 customer: 查看订单
 		ArrayList<Order> list = new ArrayList<Order>();
 		try{
 			w.rs_order.beforeFirst();
-			while(w.rs_order.next()){
-				list.add(new Order(
-							w.rs_order.getString("o_id"),
-							w.rs_order.getString("u_id"),
-							w.rs_order.getString("sdr_id"),
-							w.rs_order.getString("hava_paid"),
-							w.rs_order.getString("send_t"),
-							w.rs_order.getString(),
-							w.rs_order.getString(),
-							w.rs_order.getString(),
-							w.rs_order.getString(),
-							w.rs_order.getString(),
-							w.rs_order.getString(),
-							w.rs_order.getString(),
-							w.rs_order.getString(),
-							w.rs_order.getString(),
-							w.rs_order.getString(),
-							)
-						);
-			}catch(SQLException e){
+		}catch(SQLException e){
 				e.printStackTrace();
-			}
-
+		}
+		while(w.rs_order.next())
+			list.add(dao.Order.getOrderFromRs(w.rs_order));
+		return list;
 	}
     public static boolean cancelOrder(Worker w, ArrayList<Order> o){//顾客customer: 取消订单       status6
 		for(int i = 0; i < o.size(); i++){
 			try{
 				if(OrderFood.cancelOrder(w.rs_order, o.get(i).getOrderId())){
-					String error = f.get(i).getId() + "无法取消,可能该条目已不存在";
+					String error = o.get(i).getOrderId() + "无法取消,可能该条目已不存在";
 					throw new Exception(error);
 				}
 			}catch(Exception e){
 				e.printStackTrace();
 			}
 		}
+		return true;
 	}
-	private boolean cancelOrder(ResultSet rs, String o_id){
+
+	private static boolean cancelOrder(ResultSet rs, String o_id){
 		SearchSQL.locate(rs, "o_id", o_id);
 		// 订单状态改为取消
-		if(!up_sql_order.update("status", CANCEL_STATUS))
+		if(!UpdatableSQL.update(rs, "status", CANCEL_STATUS))
 			return false;
 		System.out.println("已发送退款请求...\n退款成功");
 		return true;

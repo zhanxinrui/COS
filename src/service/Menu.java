@@ -5,7 +5,7 @@ import model.Food;
 import model.Worker;
 
 public class Menu{
-    public static ArrayList<Food> getMenu(Worker w){
+    public static ArrayList<Food> getMenu(Worker w) throws Exception{
 		return ManageMenu.getMenu(w.rs_food);
 	}
     public static boolean prepareMeal(Food f){//备餐 要求前端更改Food的数量,根据加减 在一个界面
