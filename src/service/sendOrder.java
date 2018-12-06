@@ -36,13 +36,13 @@ public class sendOrder {
 
     Sender sdr;
     UpdatableSQL up_sql_order = new UpdatableSQL(sdr.rs_order);
-    UpdatableSQL up_sql_salary = new UpdatableSQL(sdr.rs_salary);
+//    UpdatableSQL up_sql_salary = new UpdatableSQL(sdr.rs_salary);
 
     // 用于生成o_id
     // 用于取当前日期的年月日分
-    private static final int INIT_STATUS = 1, CANCEL_STATUS = 6,
-            PAY_SALARY = 1, // PAY_ARRIVE = 2
-            NO_PAID = 0, HAVA_PAID = 1;
+//    private static final int ORDERMADE = 1,  = 2,
+//            PAY_SALARY = 1, // PAY_ARRIVE = 2
+//            NO_PAID = 0, HAVA_PAID = 1;
 
     sendOrder(Sender sdr){
         this.sdr = sdr;
@@ -56,16 +56,17 @@ public class sendOrder {
         UpdatableSQL up_sql_order = new UpdatableSQL(sdr.rs_order);
         try{
             for(Order o:orders) {
+                SearchSQL.locate(sdr.rs_order, "o_id", o.getOrderId());
                 o.setStatus(4);
                 o.setSenderId(sdr.getId());
                 SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmm");
                 Date date = new Date();
                 String dateStr = sdf.format(date);
                 String[] column_map = new String[]{
-                        "o_id", "sdr_id","status","send_t",
+                         "sdr_id","status","send_t",
                 };
                 Object[] column_value = new Object[]{
-                        o.getOrderId(), o.getSenderId(),o.getStatus(),dateStr
+                         o.getSenderId(),o.getStatus(),dateStr
                 };
                 up_sql_order.update(column_map, column_value);
             }
@@ -84,19 +85,19 @@ public class sendOrder {
 
         try{
             for(Order o:orders) {
+                SearchSQL.locate(sdr.rs_order, "o_id", o.getOrderId());
                 o.setStatus(4);
                 o.setSenderId(sdr.getId());
                 SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmm");
                 Date date = new Date();
                 String dateStr = sdf.format(date);
-
                 String[] column_map = new String[]{
-                        "o_id", "sdr_id","status","send_t",
+                        "sdr_id","status","send_t",
                 };
                 Object[] column_value = new Object[]{
-                        o.getOrderId(), o.getSenderId(),o.getStatus(),dateStr
+                        o.getSenderId(),o.getStatus(),dateStr
                 };
-                up_sql_order.update(column_map, column_value);//不对,写的有问题
+                up_sql_order.update(column_map, column_value);
 
             }
             return true;
@@ -113,6 +114,7 @@ public class sendOrder {
      * 静态方法
      **/
     public static ArrayList<Order> getReceiveOrder(Sender sdr) throws SQLException, ParseException {
+        UpdatableSQL up_sql_order = new UpdatableSQL(sdr.rs_order);
         sdr.rs_order.beforeFirst();//recover cursor to the default position
         ArrayList<Order> orderList = new ArrayList<Order>();
         while(sdr.rs_order.next()){
@@ -143,6 +145,7 @@ public class sendOrder {
      * 静态方法
      **/
     public static boolean saveOrder(Sender sdr) throws IOException, SQLException, ParseException {
+        UpdatableSQL up_sql_order = new UpdatableSQL(sdr.rs_order);
         ArrayList<Order> orderList = getReceiveOrder(sdr);
         String pathname = "订餐说明.txt";//default filename
         try(FileOutputStream fileOutputStream = new FileOutputStream(pathname,true)){//Order List content out to a file
@@ -190,26 +193,26 @@ public class sendOrder {
 
     /**
      * 送餐到达后的记录 status5
-     * 静态方法
+     * 实例方法
      * @param oList 送达订单列表
      * @param time 送达的时间
      * */
-    boolean recordReceivedOrder(Sender s, ArrayList<Order>oList, Date time) throws SQLException {
+    public boolean  recordReceivedOrder(ArrayList<Order>oList, Date time) throws SQLException {
         s.rs_order.beforeFirst();//recover cursor to the default position
         ArrayList<Order> orderList = new ArrayList<Order>();
         try{
-            for(Order o:orders) {
+            for(Order o:oList) {
+                SearchSQL.locate(sdr.rs_order,"o_id",o.getOrderId());
                 o.setSenderId(sdr.getId());
                 SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmm");
                 Date date = new Date();
                 String dateStr = sdf.format(date);
 
                 String[] column_key = new String[]{
-                        "o_id", "sdr_id","status"
+                        "arr_t","status"
                 };
                 Object[] column_value = new Object[]{
-                        o.getOrderId(), o.getSenderId(),dateStr,5,
-
+                        dateStr,5,
                 };
                 up_sql_order.update(column_key, column_value);
 
@@ -223,6 +226,42 @@ public class sendOrder {
 
     }
 
+    /**
+     * 送餐到达后的记录 status5
+     * 静态方法
+     * @param oList 送达订单列表
+     * @param time 送达的时间
+     * */
+
+    public static boolean  recordReceivedOrder(Sender s, ArrayList<Order>oList, Date time) throws SQLException {
+        UpdatableSQL up_sql_order = new UpdatableSQL(sdr.rs_order);
+        s.rs_order.beforeFirst();//recover cursor to the default position
+        ArrayList<Order> orderList = new ArrayList<Order>();
+        try{
+            for(Order o:oList) {
+                SearchSQL.locate(sdr.rs_order,"o_id",o.getOrderId());
+                o.setSenderId(sdr.getId());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmm");
+                Date date = new Date();
+                String dateStr = sdf.format(date);
+
+                String[] column_key = new String[]{
+                        "arr_t","status"
+                };
+                Object[] column_value = new Object[]{
+                        dateStr,5,
+                };
+                up_sql_order.update(column_key, column_value);
+
+            }
+            return true;
+        }catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
+    }
 
 
 
