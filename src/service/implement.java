@@ -23,10 +23,9 @@ public interface implement {
 
     //    食物：
     ArrayList<Food> getMenu(Worker w);//woker 查看菜单
-    boolean prepareMeal(HashMap<Food, Integer> m);//备餐
+    boolean prepareMeal(Food f);//备餐 要求前端更改Food的数量,根据加减 在一个界面
     boolean addNewMeal(Worker a, HashMap<Food, Integer> m);//菜单管理员
-    boolean addNumMeal(Worker a, HashMap<Food, Integer> m);//加菜
-    boolean delMeal(Worker a, ArrayList<Food> f);//删菜
+    boolean delMeal(Worker a, ArrayList<Food> f);//菜单管理员删菜
 
     //    订单:
     Order OrderMeal(ArrayList<Food> f, Worker customer, Date time, double money, String Tag, String Paid_way); //点餐 status 1
