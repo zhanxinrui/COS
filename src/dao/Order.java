@@ -24,20 +24,7 @@ public class Order {
         model.Order orderIns = null;
         try {
             if (rs.getString("s_id") == senderId) {
-                orderIns = new model.Order();
-                orderIns.setId(rs.getString("o_id"));
-                orderIns.setCustomerId(rs.getString("u_id"));
-                orderIns.setHavePaid(rs.getBoolean("havepaid"));
-                orderIns.setSenderId(rs.getString("sdr_id"));
-                orderIns.setSendTime(dateUtil.strToDate(rs.getString("sent_t")));
-                orderIns.setArriveTime(dateUtil.strToDate(rs.getString("arr_t")));
-                orderIns.setTag(rs.getString("tag"));
-                orderIns.setPaidWay(rs.getString("paid_way"));
-                orderIns.setStatus(rs.getInt("status"));
-                orderIns.setAddress(rs.getString("addr"));
-                orderIns.setRequestTime(dateUtil.strToDate(rs.getString("req_t")));
-                orderIns.setMoney(rs.getDouble("money"));
-
+                orderIns = getOrderFromRs(rs);
             }
             return orderIns;
         }catch(Exception e){
@@ -62,10 +49,7 @@ public class Order {
             rsIns.beforeFirst();//recover cursor to the default position
             while(rsIns.next()){
                 Food foodIns = new Food();
-                foodIns.setId(rsIns.getString("food.id"));
-                foodIns.setName(rsIns.getString("name") );
-                foodIns.setPrice(rsIns.getDouble("price"));
-                foodIns.setSpecial(rsIns.getString("u_id"));
+                foodIns = getFoodFromRs(rsIns);
                 foodList.add(foodIns);
             }
             return foodList;
@@ -74,9 +58,77 @@ public class Order {
             throw e;
         }
     }
+
     /**
-     * 获得
-     *
+     * 获得所有状态为status的订单
+     * @return 一致:返回一个由Status决定的Order
+     * @return 不一致:返回null
+     * @param rs 传入的resultset类型的order集合 这里只使用当前一行
+     * @param status 订单Int状态
      * */
+    public static model.Order getOrderByStatus(ResultSet rs, int status) throws SQLException, ParseException {
+        model.Order orderIns = null;
+        try {
+            if (rs.getInt("status") == status) {
+                orderIns = getOrderFromRs(rs);
+            }
+            return orderIns;
+
+        }catch(Exception e){
+//            e.printStackTrace();
+                throw e;
+            }
+    }
+
+
+
+
+    //以下是将rs转换成一个model中的对象
+
+    /**
+     * 将订单rs转换成一个Order对象
+     * @param rs 传入的resultset类型的order集合 这里只使用当前一行
+     * */
+    public static model.Order getOrderFromRs(ResultSet rs) throws SQLException, ParseException {
+        model.Order orderIns = null;
+        try {
+            orderIns = new model.Order();
+            orderIns.setId(rs.getString("o_id"));
+            orderIns.setCustomerId(rs.getString("u_id"));
+            orderIns.setHavePaid(rs.getBoolean("have_paid"));
+            orderIns.setSenderId(rs.getString("sdr_id"));
+            orderIns.setSendTime(dateUtil.strToDate(rs.getString("sent_t")));
+            orderIns.setArriveTime(dateUtil.strToDate(rs.getString("arr_t")));
+            orderIns.setTag(rs.getString("tag"));
+            orderIns.setPaidWay(rs.getString("paid_way"));
+            orderIns.setStatus(rs.getInt("status"));
+            orderIns.setAddress(rs.getString("addr"));
+            orderIns.setRequestTime(dateUtil.strToDate(rs.getString("req_t")));
+            orderIns.setMoney(rs.getDouble("money"));
+            return orderIns;
+        }catch(Exception e){
+//            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 将订单rs转换成一个Food对象
+     * @param rs 传入的resultset类型的order集合 这里只使用当前一行
+     * */
+    public static model.Food getFoodFromRs(ResultSet rs) throws SQLException, ParseException {
+        model.Food foodIns = null;
+        try {
+            foodIns = new Food();
+            foodIns.setId(rs.getString("food.id"));
+            foodIns.setName(rs.getString("name") );
+            foodIns.setPrice(rs.getDouble("price"));
+            foodIns.setSpecial(rs.getString("u_id"));
+            return foodIns;
+        }catch(Exception e){
+//            e.printStackTrace();
+            throw e;
+        }
+    }
 
 }
