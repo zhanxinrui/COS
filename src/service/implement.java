@@ -18,13 +18,21 @@ public interface implement {
     //    用户:
     Worker workerLogin(String id, String password, String type);//worker登陆
     Sender senderLogin(String id, String password, String type);//Sender登陆
-    Worker signUp(String id, String name, String addr, String email); //worker注册
-    boolean salaryPaid(Worker a);//注册工资支付
+    Worker signUp(String id, String name, String password, String addr, String email, String type); //worker注册
+
+	// 下面hgq 12.6 14:21修改
+    // boolean salaryPaid(Worker a, String id);
+	// id用于发送工资系统,注册工资支付,id可以是工资卡.
+	boolean registerSalaryPaid(Worker user, String anything_id);
+    boolean unRegisterSalaryPaid(Worker user);
 
     //    食物：
     ArrayList<Food> getMenu(Worker w);//woker 查看菜单
     boolean prepareMeal(Food f);//备餐 要求前端更改Food的数量,根据加减 在一个界面
-    boolean addNewMeal(Worker a, HashMap<Food, Integer> m);//菜单管理员
+
+	// 下面hgq 12.6 14:21修改
+    // boolean addNewMeal(Worker a, HashMap<Food, Integer> m);//菜单管理员
+    boolean addNewMeal(Worker w, Food f);//菜单管理员
     boolean delMeal(Worker a, ArrayList<Food> f);//菜单管理员删菜
 
     //    订单:

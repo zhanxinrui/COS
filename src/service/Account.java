@@ -1,10 +1,10 @@
 package service;
 
+import util.SQL;
 import util.UpdatableSQL;
 import model.Sender;
 import model.Worker;
 //import DAO.Account ;
-import java.sql.Connection;
 import java.sql.ResultSet;
 
 public class Account {
@@ -18,9 +18,9 @@ public class Account {
      */
     public static int SALARY_PAY = 1, NO_SALARY_PAY = 0;
 
-    public static Worker workerLogin(Connection con, String id, String password, String type) throws Exception{
+    public static Worker workerLogin(String id, String password, String type) throws Exception{
         Worker rsWorker = null;
-        ResultSet rs = dao.Account.getAccount( con,id,password,type);
+        ResultSet rs = dao.Account.getAccount( SQL.conn,id,password,type);
         if(rs.next()){
             rsWorker = new Worker();
             rsWorker.setId(rs.getString("id"));
@@ -37,9 +37,9 @@ public class Account {
         return rsWorker;
     }
 
-    public static Sender senderLogin(Connection con, String id,String password, String type) throws Exception{
+    public static Sender senderLogin(String id,String password, String type) throws Exception{
         Sender rsSender = null;
-        ResultSet rs = dao.Account.getAccount( con,id,password,type);
+        ResultSet rs = dao.Account.getAccount( SQL.conn,id,password,type);
         if(rs.next()){
             rsSender = new Sender();
             rsSender.setId(rs.getString("id"));
@@ -48,6 +48,34 @@ public class Account {
         }
         // else return null;
         return rsSender;
+    }
+    
+    public static Worker signUp(String id, String name, String password, String addr, String email, String type)throws Exception{
+		Worker user = new Worker(id, name, password, addr, email);
+		if(workerAdd(user ,type))
+				return user;
+		return null;
+	}
+
+	public static boolean registerSalaryPaid(Worker user, String anything_id){
+        // send info to the company system
+        // 1代表注册工资支付
+        user.setSalary_pay(SALARY_PAY);
+
+        if(!UpdatableSQL.update(user.rs_worker, "salary_pay",SALARY_PAY)) {
+            return false;
+        }
+        return true;
+    }
+    public static boolean unRegisterSalaryPaid(Worker user){
+        // send info to the company system
+        // 1代表注册工资支付
+        user.setSalary_pay(NO_SALARY_PAY);
+
+        if(!UpdatableSQL.update(user.rs_worker, "salary_pay", NO_SALARY_PAY)) {
+            return false;
+        }
+        return true;
     }
     //
 //    /**
@@ -101,26 +129,7 @@ public class Account {
         rsWorker.setName(name);
         return rsWorker;
     }
-    public static boolean registerSalaryPaid(Worker user, String anything_id){
-        // send info to the company system
-        // 1代表注册工资支付
-        user.setSalary_pay(SALARY_PAY);
-
-        if(!UpdatableSQL.update(user.rs_worker, "salary_pay",SALARY_PAY)) {
-            return false;
-        }
-        return true;
-    }
-    public static boolean unRegisterSalaryPaid(Worker user){
-        // send info to the company system
-        // 1代表注册工资支付
-        user.setSalary_pay(NO_SALARY_PAY);
-
-        if(!UpdatableSQL.update(user.rs_worker, "salary_pay", NO_SALARY_PAY)) {
-            return false;
-        }
-        return true;
-    }
+    
     
     /**
      * 更改个人信息

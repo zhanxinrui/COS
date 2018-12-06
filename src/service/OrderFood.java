@@ -22,7 +22,7 @@ public class OrderFood{
 			SALARY_PAY = 1, // NO_SALARY_PAY = 0
 			NO_PAID = 0, HAVA_PAID = 1;
 
-	OrderFood(Worker _user){ user = _user; }
+	public OrderFood(Worker _user){ user = _user; }
 
 	// 所有worker都能点餐
 	// 无tag,特殊要求
