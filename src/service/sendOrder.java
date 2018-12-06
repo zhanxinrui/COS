@@ -113,6 +113,7 @@ public class sendOrder {
      * 静态方法
      **/
     public static ArrayList<Order>getAvailOrderBySender(Sender sdr) throws SQLException, ParseException {
+        try{
         UpdatableSQL up_sql_order = new UpdatableSQL(sdr.rs_order);
         sdr.rs_order.beforeFirst();//recover cursor to the default position
         ArrayList<Order> orderList = new ArrayList<Order>();
@@ -122,6 +123,9 @@ public class sendOrder {
                 orderList.add(orderIns);
         }
         return orderList;
+        }catch(Exception e){
+            throw e;
+        }
     }
 
     /**
@@ -183,13 +187,13 @@ public class sendOrder {
         try(FileOutputStream fileOutputStream = new FileOutputStream(pathname,true)){//Order List content out to a file
             for(Order o: orderList){
                 ArrayList<Food>FoodList = getOrderFoodList(SQL.conn,o.getOrderId());
-                String str = "订单编号:" + o.getOrderId() + "  用户名:" + o.getCustomerId() + "客户要求配送时间:" + o.getRequestTime() + "\n"+
+                String str = "订单编号:" + o.getOrderId() + "  用户名:" + o.getCustomerId() + "客户要求配送时间:" + o.getRequestTime() + "\r\n"+
                         "点菜:" ;
                 for(Food f:FoodList){
                     str += (Integer.toString(FoodList.indexOf(f))+": " + f.getName()+"   ");
                 }
-                str+="配送地址:" + o.getAddress() + "  备注:" + o.getTag() + "\n" +
-                        "订单金额:" + o.getMoney() + "  是否支付:" + o.getHavePaid()+"\n\n\n";
+                str+="\r\n配送地址:" + o.getAddress() + "  备注:" + o.getTag() + "\r\n" +
+                        "订单金额:" + o.getMoney() + "  是否支付:" + o.getHavePaid()+"\r\n\r\n\r\n";
                 fileOutputStream.write(str.getBytes());
             }
             return true;

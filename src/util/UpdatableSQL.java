@@ -53,7 +53,8 @@ public class UpdatableSQL extends SQL {
 				// java.io.InputStream
 			else if(column_value[i] instanceof java.io.InputStream)
 				rs.updateBinaryStream(index, (java.io.InputStream)column_value[i]);
-
+			else if(column_value[i] == null)
+				rs.updateObject(index, column_value[i]);
 			else
 				throw new Exception("Invalid column_value");
 		}
@@ -91,7 +92,8 @@ public class UpdatableSQL extends SQL {
 				// java.io.InputStream
 			else if(column_value[i] instanceof java.io.InputStream)
 				rs.updateBinaryStream(column_map[i], (java.io.InputStream)column_value[i]);
-
+			else if(column_value[i] == null)
+				rs.updateObject(column_map[i], column_value[i]);
 			else
 				throw new Exception("Invalid column_value");
 		}

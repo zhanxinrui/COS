@@ -23,7 +23,9 @@ public class Order {
         // o_id,u_id,have_paid,sdr_id,send_t,arr_t,tag,paid_way,status,addr
         model.Order orderIns = null;
         try {
-            if (rs.getString("s_id") == senderId) {
+//            System.out.println("sdr_id:"+rs.getString("sdr_id")+"obj_id:"+senderId+"\n");
+            if (rs.getString("sdr_id") .equals( senderId)) {
+                System.out.println("sdr_id:"+rs.getString("sdr_id")+"obj_id:"+senderId+"\n");
                 orderIns = getOrderFromRs(rs);
             }
             return orderIns;
@@ -95,15 +97,17 @@ public class Order {
             orderIns = new model.Order();
             orderIns.setId(rs.getString("o_id"));
             orderIns.setCustomerId(rs.getString("u_id"));
-            orderIns.setHavePaid(rs.getBoolean("have_paid"));
+            orderIns.setHavePaid(rs.getInt("have_paid"));
             orderIns.setSenderId(rs.getString("sdr_id"));
-            orderIns.setSendTime(dateUtil.strToDate(rs.getString("sent_t")));
-            orderIns.setArriveTime(dateUtil.strToDate(rs.getString("arr_t")));
+            //System.out.println("send_t:::::::"+rs.getString("send_t"));
+          //  if(rs.getString("send_t") != null)
+            orderIns.setSendTime(rs.getDate("send_t"));
+            orderIns.setArriveTime(rs.getDate("arr_t"));
             orderIns.setTag(rs.getString("tag"));
-            orderIns.setPaidWay(rs.getString("paid_way"));
+            orderIns.setPaidWay(rs.getInt("paid_way"));
             orderIns.setStatus(rs.getInt("status"));
             orderIns.setAddress(rs.getString("addr"));
-            orderIns.setRequestTime(dateUtil.strToDate(rs.getString("req_t")));
+            orderIns.setRequestTime(rs.getDate("req_t"));
             orderIns.setMoney(rs.getDouble("money"));
             return orderIns;
         }catch(Exception e){
@@ -123,7 +127,7 @@ public class Order {
             foodIns.setId(rs.getString("food.id"));
             foodIns.setName(rs.getString("name") );
             foodIns.setPrice(rs.getDouble("price"));
-            foodIns.setSpecial(rs.getString("u_id"));
+            foodIns.setSpecial(rs.getString("feature"));
             return foodIns;
         }catch(Exception e){
 //            e.printStackTrace();

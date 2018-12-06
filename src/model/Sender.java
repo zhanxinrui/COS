@@ -7,6 +7,7 @@ package model;
  * @Time 2018-11-24 13:31:01
  */
 
+import com.mysql.cj.protocol.Resultset;
 import util.SQL;
 import util.UpdatableSQL;
 import java.sql.ResultSet;
@@ -82,8 +83,11 @@ public class Sender {
         rs_sender = rs;
     }
     public ResultSet getRsSender(){return this.rs_sender;}
+    public void setRsOrder(ResultSet rs){this.rs_order = rs;}
+    public ResultSet getRsOrder(){return this.rs_order;}
 	public void cleanChange(){
 		changed_field.clear();
 		changed_value.clear();
 	}
+
 }

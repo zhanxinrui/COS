@@ -24,7 +24,12 @@ public  class dateUtil {
     * 日期转字符串
     * */
     public static String dateToStr(Date d) throws ParseException {
+
         return  sdf.format(d);
     }
+//    public static String getNow()throws ParseException{
+//        Date now = new Date();
+//
+//    }
 
 }

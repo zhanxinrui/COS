@@ -14,7 +14,7 @@ public class Main{
 		*/
 
         // 用户登录
-        model.Worker user = Account.workerLogin(SQL.conn, "16130120", "hgq", "Customer");
+        model.Worker user = Account.workerLogin("161301", "123456",  "Customer");
         // Sender登录将worker改成sender
         if(user == null) {
             System.out.println("login failed");

@@ -137,5 +137,8 @@ public class Order {
     public void setOrderList(ArrayList<Food> orderList) {
         this.orderList = orderList;
     }
-
+    public String toString(){ return "orderId:" + this.orderId + "\t customerId: "+this.customerId+"\t senderId:"+ this.senderId
+            +"\t havePaid:"+this.havePaid+"\t sendTime:"+this.sendTime+"\t arriveTime"+this.arriveTime+"\t requestTime:"+requestTime+
+            "\ttag:"+tag+"\tpaidWay"+paidWay+"\tstatus"+status+"\t address"+address+"\tmoney"+money+"\t"+orderList;
+      }
 }
