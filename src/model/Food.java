@@ -14,11 +14,11 @@ public class Food {
     private String name;
     private double price;
     private int remain;
-<<<<<<< HEAD
-    private String special;
-=======
-    private String feature;/!!!!  我special改成了featrue把它改成了 有3种选项 special 和cheap 和 ordinary/
->>>>>>> 61fc531044dd997e84dbae75294809dead455ebc
+//<<<<<<< HEAD
+ //   private String feature;
+//=======
+    private String feature;///!!!!  我feature改成了featrue把它改成了 有3种选项 feature 和cheap 和 ordinary/
+//>>>>>>> 61fc531044dd997e84dbae75294809dead455ebc
     private Blob pic;
 
     public Food(){}
@@ -27,19 +27,17 @@ public class Food {
         this.name = name;
         this.price = price;
         this.remain = remain;
-<<<<<<< HEAD
-        this.special = null;
-=======
-        this.special = "ord";
->>>>>>> 61fc531044dd997e84dbae75294809dead455ebc
-        this.pic = null;
+//<<<<<<< HEAD
+  //      this.feature = null;
+////=======
+        this.feature = "ord";
     }
-    public Food(String id, String name, double price, int remain, String special, Blob pic) {
+    public Food(String id, String name, double price, int remain, String feature, Blob pic) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.remain = remain;
-        this.special = special;
+        this.feature = feature;
         this.pic = pic;
     }
     public String getId(){return id;}
@@ -50,11 +48,11 @@ public class Food {
     public void setPrice(double price){this.price = price;}
     public int getRemain(){return remain;}
     public void SetRemain(int remain){this.remain = remain;}
-    public String getSpecial(){return special;}
-    public void setSpecial(String special){this.special = special;}
-<<<<<<< HEAD
+    public String getSpecial(){return feature;}
+    public void setSpecial(String feature){this.feature = feature;}
+//<<<<<<< HEAD
     public Blob getPic(){return pic;}
     public void setPic(Blob pic){this.pic = pic;}
-=======
->>>>>>> 61fc531044dd997e84dbae75294809dead455ebc
+//=======
+//>>>>>>> 61fc531044dd997e84dbae75294809dead455ebc
 }
