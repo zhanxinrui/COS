@@ -43,6 +43,9 @@ public class OrderFood{
 		order.setMoney(money);
 		order.setTag(tag);
 		order.setHavePaid(INIT_STATUS);
+
+		OrderFood.addOrderToDB(customer.rs_order, order);
+		OrderFood.addListToDB(f, order);
 		return order;
 	}
     public static Order OrderMeal(ArrayList<Food> f, Worker customer, Date time, double money, String tag, int paid_way)throws Exception{
@@ -73,6 +76,27 @@ public class OrderFood{
 			}
 		}
 		return true;
+	}
+
+	public static boolean addOrderToDB(ResultSet rs, Order o){
+		String[] column_map = new String[]{
+			"o_id", "u_id", "hava_paid", "arr_t", "tag", "paid_way", "status", "addr", "money", "req_t"
+		};
+
+		Object[] column_value = new Object[]{
+			o.getOrderId(), o.getCustomerId(), o.getHavePaid(), o.getTag(), o.getPaidWay(),
+			o.getStatus(), o.getAddress(), o.getMoney(), o.getRequestTime()
+		};
+		if(UpdatableSQL.insert(rs, column_map, column_value))
+			return true;
+		return false;
+	}
+	public static void addListToDB(ArrayList<Food> f, Order o){
+		UpdatableSQL up_sql_list = new UpdatableSQL("list");
+		for(int i = 0; i < f.size(); i++){
+			Object[] obj = new Object[]{o.getOrderId(), f.get(i).getId()};
+			up_sql_list.insertToTable(obj);
+		}
 	}
 
 	private static boolean cancelOrder(ResultSet rs, String o_id){
@@ -127,6 +151,9 @@ public class OrderFood{
 			return true;
 		return false;
 	}
+
+
+
 	// 有tag,特殊要求
 	public boolean orderFood(String food_id, int paid_way, String  tag){
 		int hava_paid = NO_PAID, status = INIT_STATUS;
