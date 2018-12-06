@@ -14,12 +14,8 @@ public class Food {
     private String name;
     private double price;
     private int remain;
-//<<<<<<< HEAD
- //   private String feature;
-//=======
-    private String feature;///!!!!  我feature改成了featrue把它改成了 有3种选项 feature 和cheap 和 ordinary/
-//>>>>>>> 61fc531044dd997e84dbae75294809dead455ebc
-    private Blob pic;
+    private String feature;
+    private String pic;
 
     public Food(){}
     public Food(String id, String name, double price, int remain) {
@@ -27,12 +23,9 @@ public class Food {
         this.name = name;
         this.price = price;
         this.remain = remain;
-//<<<<<<< HEAD
-  //      this.feature = null;
-////=======
         this.feature = "ord";
     }
-    public Food(String id, String name, double price, int remain, String feature, Blob pic) {
+    public Food(String id, String name, double price, int remain, String feature, String pic) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -50,9 +43,7 @@ public class Food {
     public void SetRemain(int remain){this.remain = remain;}
     public String getSpecial(){return feature;}
     public void setSpecial(String feature){this.feature = feature;}
-//<<<<<<< HEAD
-    public Blob getPic(){return pic;}
-    public void setPic(Blob pic){this.pic = pic;}
-//=======
-//>>>>>>> 61fc531044dd997e84dbae75294809dead455ebc
+    public String getPic(){return pic;}
+    public void setPic(String pic){this.pic = pic;}
+
 }

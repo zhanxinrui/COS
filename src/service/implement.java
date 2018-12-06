@@ -24,7 +24,7 @@ public interface implement {
     //    食物：
     ArrayList<Food> getMenu(Worker w);//woker 查看菜单
     boolean prepareMeal(Food f);//备餐 要求前端更改Food的数量,根据加减 在一个界面
-    boolean addNewMeal(Worker a, HashMap<Food, Integer> m);//菜单管理员
+    boolean addNewMeal(Worker a, ArrayList<Food> m);//菜单管理员
     boolean delMeal(Worker a, ArrayList<Food> f);//菜单管理员删菜
 
     //    订单:
@@ -33,8 +33,10 @@ public interface implement {
     boolean cancelOrder(Worker w, ArrayList<Order> o);//顾客customer: 取消订单       status6
     boolean receiveOrderByCafeteria(Worker w, ArrayList<Order> list);//餐厅员工 employee: 餐厅接受订单 由餐厅员工操作 status2
     boolean requestSendOrder(Worker w, ArrayList<Order> list);//餐厅员工employee: 请求送餐 由餐厅员工操作 status3
+
+    新加<<<   ArrayList<Order>getAvailOrderBySender(Sender s);  //送餐员查看可以接的订单  2018/12/6 13:01 +
     boolean receiveOrderBySender(Sender s, ArrayList<Order> list);//送餐员Sender: 接受订单 status4         未实现zxr
-    ArrayList<Order> getReceiveOrder(Sender s);//送餐员Sender: 获取送餐员接受的订单                                已实现zxr
+    ArrayList<Order> getReceiveOrderBySender(Sender s);//送餐员Sender: 获取送餐员接受的订单                                已实现zxr
     boolean saveOrder(Sender s);//送餐员Sender: 打印送餐说明                                        已实现                                                                                      已实现zxr
     boolean recordReceivedOrder(Sender s, ArrayList<Order>o, Date time);//送餐员Sender: 记录已经到达的订单即支付 status 5
 }

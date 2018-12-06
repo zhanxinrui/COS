@@ -108,12 +108,43 @@ public class sendOrder {
 
     }
 
+    /**
+     * 送餐员获取可以接的订单
+     * 静态方法
+     **/
+    public static ArrayList<Order>getAvailOrderBySender(Sender sdr) throws SQLException, ParseException {
+        UpdatableSQL up_sql_order = new UpdatableSQL(sdr.rs_order);
+        sdr.rs_order.beforeFirst();//recover cursor to the default position
+        ArrayList<Order> orderList = new ArrayList<Order>();
+        while(sdr.rs_order.next()){
+            Order orderIns = dao.Order.getOrderByStatus(sdr.rs_order,3);//dao获取订单  status 3 ready
+            if(orderIns!=null)
+                orderList.add(orderIns);
+        }
+        return orderList;
+    }
+
+    /**
+     * 送餐员获取可以接的订单
+     * 实例方法
+     **/
+    public  ArrayList<Order>getAvailOrderBySender() throws SQLException, ParseException {
+        UpdatableSQL up_sql_order = new UpdatableSQL(sdr.rs_order);
+        sdr.rs_order.beforeFirst();//recover cursor to the default position
+        ArrayList<Order> orderList = new ArrayList<Order>();
+        while(sdr.rs_order.next()){
+            Order orderIns = dao.Order.getOrderByStatus(sdr.rs_order,3);//dao获取订单  status 3 ready
+            if(orderIns!=null)
+                orderList.add(orderIns);
+        }
+        return orderList;
+    }
 
     /**
      * 送餐员获取自己接的订单
      * 静态方法
      **/
-    public static ArrayList<Order> getReceiveOrder(Sender sdr) throws SQLException, ParseException {
+    public static ArrayList<Order> getReceiveOrderBySender(Sender sdr) throws SQLException, ParseException {
         UpdatableSQL up_sql_order = new UpdatableSQL(sdr.rs_order);
         sdr.rs_order.beforeFirst();//recover cursor to the default position
         ArrayList<Order> orderList = new ArrayList<Order>();
@@ -126,10 +157,11 @@ public class sendOrder {
     }
 
     /**
-     * 送餐员获取自己接的订单   实例方法
+     * 送餐员获取自己接的订单
+     * 实例方法
      *
      * */
-    public ArrayList<Order> getReceiveOrder() throws SQLException, ParseException {
+    public ArrayList<Order> getReceiveOrderBySender() throws SQLException, ParseException {
         sdr.rs_order.beforeFirst();//recover cursor to the default position
         ArrayList<Order> orderList = new ArrayList<Order>();
         while(sdr.rs_order.next()){
