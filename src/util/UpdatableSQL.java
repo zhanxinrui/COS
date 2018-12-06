@@ -573,4 +573,19 @@ public class UpdatableSQL extends SQL {
 		super.closeStatement(_rs);
 		return false;
 	}
+	
+	/**
+	 * 12-05 23:40添加删除某一行的方法
+	 */
+	public static boolean delete(ResultSet _rs, String primary_key_name, String primary_key){
+		if(!SearchSQL.locate(_rs, primary_key_name, primary_key))
+			return false;
+		try{
+			_rs.deleteRow();
+			return true;
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

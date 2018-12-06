@@ -12,7 +12,6 @@ public class OrderFood{
 
 	Worker user;
 	UpdatableSQL up_sql_order = new UpdatableSQL(user.rs_order);
-	UpdatableSQL up_sql_salary = new UpdatableSQL(user.rs_salary);
 
 	// 用于生成o_id
 	// 用于取当前日期的年月日分
@@ -20,17 +19,17 @@ public class OrderFood{
 	static int count_id = 100;
 	
 	private static final int INIT_STATUS = 1, CANCEL_STATUS = 6, 
-			PAY_SALARY = 1, // PAY_ARRIVE = 2
+			SALARY_PAY = 1, // NO_SALARY_PAY = 0
 			NO_PAID = 0, HAVA_PAID = 1;
 
 	OrderFood(Worker _user){ user = _user; }
 
 	// 所有worker都能点餐
 	// 无tag,特殊要求
-	public boolean OrderFood(String food_id, int paid_way){
+	public boolean orderFood(String food_id, int paid_way){
 		int hava_paid = NO_PAID, status = INIT_STATUS;
-		if(paid_way == PAY_SALARY){
-			this.payFromSalay(this.getFoodPrice(food_id));
+		if(paid_way == SALARY_PAY){
+			System.out.println("已选择工资支付，正在发送付费请求.");
 			hava_paid = HAVA_PAID;
 		}
 		String o_id = null, temp_id = null;
@@ -50,14 +49,15 @@ public class OrderFood{
 			o_id, user.getId(), hava_paid, paid_way, status, user.getAddress()
 		};	
 
-		up_sql_order.insert(column_map, column_value);
-		return true;
+		if(up_sql_order.insert(column_map, column_value))
+			return true;
+		return false;
 	}
 	// 有tag,特殊要求
 	public boolean orderFood(String food_id, int paid_way, String  tag){
 		int hava_paid = NO_PAID, status = INIT_STATUS;
-		if(paid_way == PAY_SALARY){
-			this.payFromSalay(this.getFoodPrice(food_id));
+		if(paid_way == SALARY_PAY){
+			System.out.println("已选择工资支付，正在发送付费请求.");
 			hava_paid = HAVA_PAID;
 		}
 		String o_id = null, temp_id = null;
@@ -76,21 +76,34 @@ public class OrderFood{
 		Object[] column_value = new Object[]{
 			o_id, user.getId(), hava_paid, paid_way, status, user.getAddress()
 		};	
-		up_sql_order.insert(column_map, column_value);
-		return true;
+		if(up_sql_order.insert(column_map, column_value))
+			return true;
+		return false;
 	}
 
-	public void cancelOrder(String o_id){
+	public boolean cancelOrder(String o_id){
 		SearchSQL.locate(user.rs_order, "o_id", o_id);
 		// 订单状态改为取消
-		up_sql_order.update("status", CANCEL_STATUS);
+		if(!up_sql_order.update("status", CANCEL_STATUS))
+			return false;
+		System.out.println("已发送退款请求...\n退款成功");
+		return true;
 		// 如果以付款,那么退款
+		/*
 		try{
 		if(user.rs_order.getInt("hava_paid") == HAVA_PAID)
 			refundFromSalary(getFoodPrice(user.rs_order.getString("f_id")));
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
+		*/
+	}
+
+	/*
+	public float getFoodPrice(String id){
+		SearchSQL search_sql = new SearchSQL(user.rs_food);		
+		Object obj = search_sql.searchMultiRow("id", id, "price");
+		return (float)obj;
 	}
 
 	// 返回值: 0 支付成功	-1 余额不足		1 支付失败
@@ -112,10 +125,6 @@ public class OrderFood{
 	public int refundFromSalary(float price){
 		return payFromSalay(-price);
 	}
+	*/
 
-	public float getFoodPrice(String id){
-		SearchSQL search_sql = new SearchSQL(user.rs_food);		
-		Object obj = search_sql.searchMultiRow("id", id, "price");
-		return (float)obj;
-	}
 }

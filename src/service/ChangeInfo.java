@@ -1,3 +1,4 @@
+// 这个文件已经没用了
 package service;
 
 import java.util.ArrayList;
@@ -15,7 +16,11 @@ public class ChangeInfo{
 
 	private static int SALARY_PAY = 1;
 
-	ChangeInfo(Worker _user){ user = _user; }
+	ChangeInfo(Worker _user){ 
+		user = _user;
+		changed_field = new ArrayList<String>();
+		changed_value = new ArrayList<Object>();
+	}
 
 	public void setName(String name) {
 		user.setName(name);
@@ -40,7 +45,7 @@ public class ChangeInfo{
 
 	// 将信息变动更新到数据库
 	public boolean applyChangeToDb(){
-		if(UpdatableSQL.update(user.rs_worker, (String[])changed_field.toArray(), changed_value.toArray())){
+		if(UpdatableSQL.update(user.rs_worker, (String[])changed_field.toArray(), (Object[])changed_value.toArray())){
 			cleanChange();
 			return true;
 		}

@@ -1,6 +1,5 @@
 package service;
 import util.SQL;
-import util.UpdatableSQL;
 
 public class Main{
     public static void main(String[] args) throws Exception{
@@ -26,11 +25,17 @@ public class Main{
         }
         if(user.rs_worker == null)
             System.out.println("error : rs_work is null");
-        if(Account.unRegisterSalaryPaid(user))
-            System.out.println("register success!");
-        else
-            return;
-
+        
+		// 注册工资支付
+        //if(Account.unRegisterSalaryPaid(user))
+         //   System.out.println("register success!");
+       // else
+         //   return;
+	
+		// 修改属性
+        user.setPassword("123456");
+        if(!Account.applyChange(user))
+        	System.out.println("error!");
         sql.close();
     }
 }

@@ -14,7 +14,7 @@ public class Food {
     private String name;
     private double price;
     private int remain;
-    private boolean special;
+    private String special;
     private Blob pic;
 
     public Food(){}
@@ -23,10 +23,10 @@ public class Food {
         this.name = name;
         this.price = price;
         this.remain = remain;
-        this.special = false;
+        this.special = null;
         this.pic = null;
     }
-    public Food(String id, String name, double price, int remain, boolean special, Blob pic) {
+    public Food(String id, String name, double price, int remain, String special, Blob pic) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -42,6 +42,8 @@ public class Food {
     public void setPrice(double price){this.price = price;}
     public int getRemain(){return remain;}
     public void SetRemain(int remain){this.remain = remain;}
-    public boolean getSpecial(){return special;}
-    public void setSpecial(boolean special){this.special = special;}
+    public String getSpecial(){return special;}
+    public void setSpecial(String special){this.special = special;}
+    public Blob getPic(){return pic;}
+    public void setPic(Blob pic){this.pic = pic;}
 }

@@ -1,4 +1,4 @@
-package DAO;
+package dao;
 
 /**dao
  *@Description 此对象用于访问数据库。

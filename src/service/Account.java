@@ -121,6 +121,23 @@ public class Account {
         }
         return true;
     }
+    
+    /**
+     * 更改个人信息
+     * 仅限密码，姓名，邮件和地址
+     * 使用Worker类的set方法后使用这个静态方法将更改同步到数据库
+     */
+    public static boolean applyChange(Worker user) {
+		String[] column_map = new String[]{
+			"passwd", "addr", "email", "name"
+		};
+		Object[] column_value = new Object[]{
+			user.getPassword(), user.getAddress(), user.getEmail(), user.getName()
+		};
+		if(UpdatableSQL.update(user.rs_worker, column_map, column_value))
+			return true;
+		return false;
+		}
 }
 	/*
     public boolean salaryIdAdd(Worker user, UpdatableSQL up_sql, String id, float salary){
