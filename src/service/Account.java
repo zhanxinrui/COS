@@ -20,7 +20,7 @@ public class Account {
 
     public static Worker workerLogin(Connection con, String id, String password, String type) throws Exception{
         Worker rsWorker = null;
-        ResultSet rs = DAO.Account.getAccount( con,id,password,type);
+        ResultSet rs = dao.Account.getAccount( con,id,password,type);
         if(rs.next()){
             rsWorker = new Worker();
             rsWorker.setId(rs.getString("id"));
@@ -39,7 +39,7 @@ public class Account {
 
     public static Sender senderLogin(Connection con, String id,String password, String type) throws Exception{
         Sender rsSender = null;
-        ResultSet rs = DAO.Account.getAccount( con,id,password,type);
+        ResultSet rs = dao.Account.getAccount( con,id,password,type);
         if(rs.next()){
             rsSender = new Sender();
             rsSender.setId(rs.getString("id"));

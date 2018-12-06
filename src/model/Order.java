@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 /**
  *定义了订单order类，
@@ -24,7 +25,7 @@ public class Order {
     private int status;
     private String address;
     private double money;
-    private String orderList;
+    private ArrayList<Food> orderList;
     /**
      * @param orderId 订单编号
      * @param customerId 顾客编号
@@ -41,7 +42,7 @@ public class Order {
      */
     public Order(){}
     public Order(String orderId, String customerId, String SenderId, boolean havePaid, Date sendTime, Date arriveTime,
-                 Date requestTime, String tag, String paidWay, int status, String address, double money, String orderList ) {
+                 Date requestTime, String tag, String paidWay, int status, String address, double money, ArrayList<Food> orderList ) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.senderId = senderId;
@@ -130,10 +131,10 @@ public class Order {
     public void setMoney(double money) {
         this.money = money;
     }
-    public String getOrderList() {
+    public ArrayList<Food> getOrderList() {
         return orderList;
     }
-    public void setOrderList(String orderList) {
+    public void setOrderList(ArrayList<Food> orderList) {
         this.orderList = orderList;
     }
 
