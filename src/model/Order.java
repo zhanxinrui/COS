@@ -14,12 +14,12 @@ public class Order {
     private String orderId;
     private String customerId;
     private String senderId;
-    private boolean havePaid;
+    private int havePaid;
     private Date sendTime;
     private Date arriveTime;
     private Date requestTime;
     private String tag ;
-    private String paidWay;
+    private int paidWay;
 //    status 1         2             3            4              5              6
 //           已下单   餐厅接单      ready         配送接单        已送达        已取消
     private int status;
@@ -41,8 +41,8 @@ public class Order {
      * @param money 订单总金额
      */
     public Order(){}
-    public Order(String orderId, String customerId, String SenderId, boolean havePaid, Date sendTime, Date arriveTime,
-                 Date requestTime, String tag, String paidWay, int status, String address, double money, ArrayList<Food> orderList ) {
+    public Order(String orderId, String customerId, String SenderId, int havePaid, Date sendTime, Date arriveTime,
+                 Date requestTime, String tag, int paidWay, int status, String address, double money, ArrayList<Food> orderList ) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.senderId = senderId;
@@ -76,10 +76,10 @@ public class Order {
     public void setSenderId(String id) {
         this.senderId = id;
     }
-    public boolean getHavePaid() {
+    public int getHavePaid() {
         return havePaid;
     }
-    public void setHavePaid(boolean havePaid) {
+    public void setHavePaid(int havePaid) {
         this.havePaid = havePaid;
     }
     public Date getSendTime() {
@@ -107,10 +107,10 @@ public class Order {
     public void setTag(String tag) {
         this.tag = tag;
     }
-    public String getPaidWay() {
+    public int getPaidWay() {
         return paidWay;
     }
-    public void setPaidWay(String paidWay) {
+    public void setPaidWay(int paidWay) {
         this.paidWay = paidWay;
     }
     public int getStatus() {

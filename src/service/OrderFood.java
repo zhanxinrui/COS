@@ -3,8 +3,11 @@ package service;
 import java.util.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import model.Worker;
+import model.Order;
+import model.Food;
 import util.UpdatableSQL;
 import util.SearchSQL;
 
@@ -19,11 +22,96 @@ public class OrderFood{
 	static int count_id = 100;
 	
 	private static final int INIT_STATUS = 1, CANCEL_STATUS = 6, 
-			SALARY_PAY = 1, // NO_SALARY_PAY = 0
+			SALARY_PAY = 1, NO_SALARY_PAY = 0,
 			NO_PAID = 0, HAVA_PAID = 1;
 
 	public OrderFood(Worker _user){ user = _user; }
 
+	// -------------静态方法定义在前面---------------//
+    public static Order OrderMeal(ArrayList<Food> f, Worker customer, double money, String tag, int paid_way)throws Exception{
+		Order order = new Order(); 
+		if(paid_way == SALARY_PAY)
+			if(customer.getSalary_pay() == NO_SALARY_PAY){
+				System.out.println("您未注册工资支付");
+				throw new Exception("您未注册工资支付");
+			}
+		order.setPaidWay(paid_way);
+		order.setId(OrderFood.generateO_id(customer));
+		order.setCustomerId(customer.getId());
+		order.setOrderList(f);
+		order.setMoney(money);
+		order.setTag(tag);
+		order.setHavePaid(INIT_STATUS);
+		return order;
+	}
+    public static Order OrderMeal(ArrayList<Food> f, Worker customer, Date time, double money, String tag, int paid_way)throws Exception{
+		Order order = OrderMeal(f, customer, money, tag, paid_way);
+		order.setRequestTime(time);
+		return order;
+	}
+    public static ArrayList<Order> getOrderList(Worker w){//顾客 customer: 查看订单
+		ArrayList<Order> list = new ArrayList<Order>();
+		try{
+			w.rs_order.beforeFirst();
+			while(w.rs_order.next()){
+				list.add(new Order(
+							w.rs_order.getString("o_id"),
+							w.rs_order.getString("u_id"),
+							w.rs_order.getString("sdr_id"),
+							w.rs_order.getString("hava_paid"),
+							w.rs_order.getString("send_t"),
+							w.rs_order.getString(),
+							w.rs_order.getString(),
+							w.rs_order.getString(),
+							w.rs_order.getString(),
+							w.rs_order.getString(),
+							w.rs_order.getString(),
+							w.rs_order.getString(),
+							w.rs_order.getString(),
+							w.rs_order.getString(),
+							w.rs_order.getString(),
+							)
+						);
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+
+	}
+    public static boolean cancelOrder(Worker w, ArrayList<Order> o){//顾客customer: 取消订单       status6
+		for(int i = 0; i < o.size(); i++){
+			try{
+				if(OrderFood.cancelOrder(w.rs_order, o.get(i).getOrderId())){
+					String error = f.get(i).getId() + "无法取消,可能该条目已不存在";
+					throw new Exception(error);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+	}
+	private boolean cancelOrder(ResultSet rs, String o_id){
+		SearchSQL.locate(rs, "o_id", o_id);
+		// 订单状态改为取消
+		if(!up_sql_order.update("status", CANCEL_STATUS))
+			return false;
+		System.out.println("已发送退款请求...\n退款成功");
+		return true;
+	}
+
+
+	private static String generateO_id(Worker user){
+		String o_id = null, temp_id = null;
+		Date current_time = new Date();
+		o_id = sdf.format(current_time);
+
+		if((count_id++) == 200)
+			count_id = 100;
+		temp_id = Integer.toOctalString(count_id).substring(1);
+		// 以当前时间年月日时分各两位 + 用户id + temp_id作为唯一订单号
+		o_id = o_id + user.getId() + temp_id;
+		return o_id;
+	}
+	
 	// 所有worker都能点餐
 	// 无tag,特殊要求
 	public boolean orderFood(String food_id, int paid_way){

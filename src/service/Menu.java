@@ -21,7 +21,7 @@ public class Menu{
     public static void delMeal(Worker a, ArrayList<Food> f){//菜单管理员删菜
 		for(int i = 0; i < f.size(); i++){
 			try{
-				if(!ManageMenu.addMenu(a.rs_food, f.get(i))){
+				if(!ManageMenu.deleteMenu(a.rs_food, f.get(i))){
 					String error = f.get(i).getId() + "无法删除,可能该条目已不存在";
 					throw new Exception(error);
 				}

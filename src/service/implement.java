@@ -37,7 +37,8 @@ public interface implement {
     boolean delMeal(Worker a, ArrayList<Food> f);//菜单管理员删菜
 
     //    订单:
-    Order OrderMeal(ArrayList<Food> f, Worker customer, Date time, double money, String Tag, String Paid_way); //点餐 status 1
+    Order OrderMeal(ArrayList<Food> f, Worker customer, Date time, double money, String Tag, int paid_way); //点餐 status 1
+    Order OrderMeal(ArrayList<Food> f, Worker customer, double money, String Tag, int paid_way); // 12.6 hgq+ 有些订单不需要指定时间
     ArrayList<Order> getOrderList(Worker w);//顾客 customer: 查看订单
     boolean cancelOrder(Worker w, ArrayList<Order> o);//顾客customer: 取消订单       status6
     boolean receiveOrderByCafeteria(Worker w, ArrayList<Order> list);//餐厅员工 employee: 餐厅接受订单 由餐厅员工操作 status2

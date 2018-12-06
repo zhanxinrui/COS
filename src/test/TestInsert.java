@@ -6,6 +6,8 @@ import util.UpdatableSQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import sun.security.timestamp.TSRequest;
+
 public class TestInsert{
 	// ResultSet next有抛出SQLException异常的可能,但我打算处理
 	public static void main(String[] args) throws SQLException{
@@ -40,13 +42,19 @@ public class TestInsert{
 
 */
 		Object[] column_value = new Object[2];
-		column_value[0] = 1925;
-		column_value[1] = "hhnwoei";
-		UpdatableSQL upsql = new UpdatableSQL(rs);
-		if(column_value[1] instanceof Integer)
-			System.out.println("judge error!");
-		System.out.println("judge right!");
-		upsql.insert(column_value);
+		String m = null;
+		Integer m;
+		column_value[0] = 1988;
+		column_value[1] = m;
+		//UpdatableSQL upsql = new UpdatableSQL(rs);
+		//if(column_value[1] instanceof Integer)
+			//System.out.println("judge error!");
+		//System.out.println("judge right!");
+		//upsql.insert(column_value);
+		rs.moveToInsertRow();
+		rs.updateObject(1, m);
+		rs.updateObject(2, column_value[1]);
+		rs.insertRow();
 		rs.close();
 		rs = sql.query("select id, str from test");
 		while(rs.next()){
