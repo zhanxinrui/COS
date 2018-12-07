@@ -67,7 +67,7 @@ public class OrderFood{
     public static boolean cancelOrder(Worker w, ArrayList<Order> o){//顾客customer: 取消订单       status6
 		for(int i = 0; i < o.size(); i++){
 			try{
-				if(OrderFood.cancelOrder(w.rs_order, o.get(i).getOrderId())){
+				if(!OrderFood.cancelOrder(w.rs_order, o.get(i).getOrderId())){
 					String error = o.get(i).getOrderId() + "无法取消,可能该条目已不存在";
 					throw new Exception(error);
 				}
