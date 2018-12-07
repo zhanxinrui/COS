@@ -46,6 +46,8 @@ public class OrderFood{
 
 		OrderFood.addOrderToDB(customer.rs_order, order);
 		OrderFood.addListToDB(f, order);
+		// 给客户发送邮件
+		util.Mail.sendMail(customer.getEmail(), OrderFood.generateRandom());
 		return order;
 	}
     public static Order OrderMeal(ArrayList<Food> f, Worker customer, Date time, double money, String tag, int paid_way)throws Exception{
@@ -121,7 +123,12 @@ public class OrderFood{
 		o_id = o_id + user.getId() + temp_id;
 		return o_id;
 	}
+	private static String generateRandom(){
+		int int_random = (int)((Math.random()*9+1)*100000);
+		return int_random + "";
+	}
 	
+	// -------------非静态方法-------------基本弃用了
 	// 所有worker都能点餐
 	// 无tag,特殊要求
 	public boolean orderFood(String food_id, int paid_way){
